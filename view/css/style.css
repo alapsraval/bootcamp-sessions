@@ -22,6 +22,11 @@ body {
   display: none;
 }
 
+.navbar{
+  visibility:hidden;
+}
+
+
 .loader-container {
   flex-direction: column;
   align-items: center;
