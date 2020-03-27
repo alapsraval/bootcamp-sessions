@@ -5,12 +5,12 @@ $(function () {
     function getProfile(sessionToken) {
         $.get( "https://bootcampspot.com/broker/me?authToken=" + sessionToken, function(response) {
             let userInfo = response.userAccount;
-            let courseInfo = response.userAccount.enrollments[0];
+            let courseInfo = response.enrollments[0];
 
             $( "#user-name" ).html(`${userInfo.firstName} ${userInfo.lastName} 
             <img alt="${userInfo.firstName} Profile" src="https://bootcampspot.com/broker/studentAvatar?accountId=${userInfo.id}" \
             class="fill rounded " width="30" height="30" >`);
-            $( "#course-info" ).html(`${courseInfo.course.cohurt.program.name}`);
+            $( "#course-info" ).html(`${courseInfo.course.cohort.program.name}`);
           });
     }
 
