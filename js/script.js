@@ -1,4 +1,4 @@
-const headers = ['Session #', 'Session Name', 'Date', 'Day'];
+const headers = ['Session ID', 'Session Name', 'Date', 'Day'];
 var sessionToken = '';
 $(function () {
 
@@ -82,9 +82,9 @@ $(function () {
                 });
             },
             complete: function () {
-                // Hide loader once profile-view is loaded.
+                // Hide loader once sessions-view is loaded.
                 $("#loader-view").css('display', 'none');
-                // Display profile-view.
+                // Display sessions-view.
                 $("#sessions-view").css('display', 'block');
             }
         });
@@ -132,5 +132,41 @@ $(function () {
 
         event.preventDefault();
 
+    });
+
+    function exportTableToExcel(tableID='sessions-table', filename = '') {
+        var downloadLink;
+        var dataType = 'application/vnd.ms-excel';
+        var tableSelect = document.getElementById(tableID);
+        var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20').replace('#', '%23');
+
+        // Specify file name
+        filename = filename ? filename + '.xls' : 'sessions.xls';
+
+        // Create download link element
+        downloadLink = document.createElement("a");
+
+        document.body.appendChild(downloadLink);
+
+        if (navigator.msSaveOrOpenBlob) {
+            var blob = new Blob(['\ufeff', tableHTML], {
+                type: dataType
+            });
+            navigator.msSaveOrOpenBlob(blob, filename);
+        } else {
+            // Create a link to the file
+            downloadLink.href = 'data:' + dataType + ', ' + tableHTML;
+            // Setting the file name
+            downloadLink.download = filename;
+            //triggering the function
+            downloadLink.click();
+        }
+    }
+    $("#download-btn").click(function (event) {
+        exportTableToExcel();
+        // $("#sessions-table").excelexportjs({
+        //       containerid:"sessions-table",
+        //       datatype:'table'
+        //     });        
     });
 });

@@ -18,7 +18,7 @@ body {
   margin: 0;
 }
 
-#loader-view {
+#loader-view, #sessions-view {
   display: none;
 }
 
@@ -65,7 +65,7 @@ body {
 }
 
 
-button {
+/* button {
   cursor: pointer;
   margin: 24px;
   padding: 6px 12px;
@@ -93,7 +93,7 @@ button.disabled {
   box-shadow: none;
   border: 1px solid transparent;
   cursor: not-allowed;
-}
+} */
 
 .app-title {
   margin: 10px 24px;
