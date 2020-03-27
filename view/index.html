@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--Define title-->
+    <title>Coding Bootcamp Sessions</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link href="https://fonts.googleapis.com/css?family=Nunito&display=swap" rel="stylesheet">
+    <!--You can load all the css files here -->
+    <link rel="stylesheet" type="text/css" href="css/select.css">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+</head>
+
+<body>
+    
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12 p-0">
+                <nav class="navbar navbar-dark bg-dark">
+                    <a class="navbar-brand">Coding Bootcamp Sessions</a>
+                    <a class="navbar-brand" id="user-name"></a>
+                </nav>
+
+                <div id="loader-view">
+                    <section class="loader-container">
+                        <span class="loader"></span>
+                    </section>
+                </div>
+
+                <div class="content">
+                    <div id="login-form" class="wrapper fadeInDown">
+                        <div id="formContent">
+                            <!-- Login Form -->
+                            <form>
+                                <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
+                                <input type="password" id="password" class="fadeIn third" name="login"
+                                    placeholder="password">
+                                <input type="submit" id="login-btn" class="fadeIn fourth" value="Log In">
+                            </form>
+                        </div>
+                    </div>
+
+                    <section class="sessions-container" id="sessions-view">
+                        <table id="sessions-table">
+                            <thead id="table-header"></thead>
+                            <tbody id="table-body"></tbody>
+                        </table>
+                    </section>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!--You can load all the javascript files here-->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"
+        integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU=" crossorigin="anonymous"></script>
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" rel="stylesheet"
+        id="bootstrap-css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="js/config.js"></script>
+    <script type="text/javascript" src="js/script.js"></script>
+</body>
+
+</html>
