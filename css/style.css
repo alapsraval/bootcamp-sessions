@@ -130,7 +130,7 @@ button.disabled {
   margin: 50px auto 0;
 }
 
-#sessions-view {
+/* #sessions-view {
   margin: 20px auto;
   background: white;
   width: 90%;
@@ -138,7 +138,7 @@ button.disabled {
   border: 1px solid #f0f0f0;
   border-radius: 4px;
   display: none;
-}
+} */
 /* 
 #user-profile {
   display: flex;
@@ -147,7 +147,7 @@ button.disabled {
   margin: 24px 16px 20px;
 } */
 
-#sessions-table {
+/* #sessions-table {
   border-collapse: collapse;
   border-spacing: 0;
   width: 85%;
@@ -155,7 +155,7 @@ button.disabled {
   margin: 20px auto 60px;
   font-family: Verdana, sans-serif;
   font-size: 14px;
-}
+} */
 
 tr {
   border-bottom: 1px solid #ddd;
