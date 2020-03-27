@@ -3,15 +3,16 @@ var sessionToken = '';
 $(function () {
 
     function getProfile(sessionToken) {
-        $.get( "https://bootcampspot.com/broker/me?authToken=" + sessionToken, function(response) {
+        $.get("https://bootcampspot.com/broker/me?authToken=" + sessionToken, function (response) {
             let userInfo = response.userAccount;
             let courseInfo = response.enrollments[0];
 
-            $( "#user-name" ).html(`${userInfo.firstName} ${userInfo.lastName} 
+            $("#user-name").html(`${userInfo.firstName} ${userInfo.lastName} 
             <img alt="${userInfo.firstName} Profile" src="https://bootcampspot.com/broker/studentAvatar?accountId=${userInfo.id}" \
             class="fill rounded " width="30" height="30" >`);
-            $( "#course-info" ).html(`${courseInfo.course.cohort.program.name}`);
-          });
+            $("#course-info").html(`${courseInfo.course.cohort.program.name}`);
+            $(".navbar").css('visibility', 'visible');
+        });
     }
 
     $('#table-header').html('');
@@ -35,7 +36,7 @@ $(function () {
                 $('#table-header').append('<tr>');
                 var headerRow = $('#table-header tr');
                 $.each(headers, function (index, value) {
-                    headerRow.append(`<th>${value}</th>`);
+                    headerRow.append(`<th scope="col">${value}</th>`);
                 });
 
                 $.each(data, function (index, value) {
@@ -89,14 +90,31 @@ $(function () {
             }),
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
-                sessionToken = response.authenticationInfo.authToken
-                getProfile(sessionToken);
-                getSessions(sessionToken);
+                $("#error-message").remove();
+                if (response.success) {
+                    sessionToken = response.authenticationInfo.authToken
+                    getProfile(sessionToken);
+                    getSessions(sessionToken);
+                    // Hide login form.
+                    $("#login-form").css('display', 'none');
+                } else {
+                    let errorMessage = response.errorCode;
+                    switch (errorMessage) {
+                        case 'INVALID_CREDENTIALS':
+                            errorMessage = "Invalid Credentials."
+                            break;
+                        default:
+                            errorMessage = "Something went wrong."
+                    }
+                    $("#formContent").append(`<p id="error-message" class="text-danger">${errorMessage}</p>`);
+                }
             },
             complete: function () {
                 // Hide login form.
-                $("#login-form").css('display', 'none');
-                $(".navbar").css('visibility', 'visible');
+                // $("#login-form").css('display', 'none');
+            },
+            error: function (xhr) {
+                alert("An error occured: " + xhr.status + " " + xhr.statusText);
             }
         });
 
