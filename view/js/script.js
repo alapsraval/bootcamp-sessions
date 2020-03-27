@@ -1,4 +1,4 @@
-const headers = ['Chapter #', 'Name', 'Date', 'Day'];
+const headers = ['Session #', 'Session Name', 'Date', 'Day'];
 var sessionToken = '';
 $(function () {
 
