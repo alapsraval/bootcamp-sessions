@@ -4,7 +4,13 @@ $(function () {
 
     function getProfile(sessionToken) {
         $.get( "https://bootcampspot.com/broker/me?authToken=" + sessionToken, function(response) {
-            $( "#user-name" ).html(`${response.userAccount.firstName} ${response.userAccount.lastName} <img alt="${response.userAccount.firstName} Profile" src="https://bootcampspot.com/broker/studentAvatar?accountId=${response.userAccount.id}" class="fill rounded " width="30" height="30" >`);
+            let userInfo = response.userAccount;
+            let courseInfo = response.userAccount.enrollments[0];
+
+            $( "#user-name" ).html(`${userInfo.firstName} ${userInfo.lastName} 
+            <img alt="${userInfo.firstName} Profile" src="https://bootcampspot.com/broker/studentAvatar?accountId=${userInfo.id}" \
+            class="fill rounded " width="30" height="30" >`);
+            $( "#course-info" ).html(`${courseInfo.course.cohurt.program.name}`);
           });
     }
 
@@ -90,6 +96,7 @@ $(function () {
             complete: function () {
                 // Hide login form.
                 $("#login-form").css('display', 'none');
+                $(".navbar").css('visibility', 'visible');
             }
         });
 
