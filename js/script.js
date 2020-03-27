@@ -59,8 +59,20 @@ $(function () {
                                 authtoken: sessionToken
                             },
                             success: function (response) {
-                                sessionURL = response.session.videoUrlList.length > 0 ? response.session.videoUrlList[0].url : '';
-                                name = sessionURL ? `<a href='${sessionURL}'>${name}</a>` : name;
+                                let urlList = response.session.videoUrlList;
+                                if (urlList.length > 0) {
+                                    sessionURL = urlList[0].url;
+                                }
+                                name = sessionURL ? `<a href='${sessionURL}' target='_blank'>${name}</a>` : name;
+
+                                if (urlList.length > 1) {
+                                    let i;
+                                    for (i = 1; i < urlList.length; i++) {
+                                        let additionalURL = urlList[i].url;
+                                        name += `, <a href='${additionalURL}' target='_blank'>[${i + 1}]</a>`;
+                                    }
+                                }
+
                                 // Add rows to table-body
                                 var row = $(`<tr><td>${chapterNo}</td><td>${name}</td><td>${sessionDate}</td><td>${sessionDay}</td>`);
                                 $('#table-body').append(row);
