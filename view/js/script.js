@@ -6,10 +6,11 @@ $(function () {
         $.get("https://bootcampspot.com/broker/me?authToken=" + sessionToken, function (response) {
             let userInfo = response.userAccount;
             let courseInfo = response.enrollments[0];
+            // /broker/studentAvatar?accountId=
 
-            $("#user-name").html(`${userInfo.firstName} ${userInfo.lastName} 
-            <img alt="${userInfo.firstName} Profile" src="https://bootcampspot.com/broker/studentAvatar?accountId=${userInfo.id}" \
-            class="fill rounded " width="30" height="30" >`);
+            let image_url = userInfo.nexusAvatarUrl ? ` <img alt="${userInfo.firstName} Profile" src="https://bootcampspot.com${userInfo.nexusAvatarUrl}" class="fill rounded " width="30" height="30" ></img>` : '';
+
+            $("#user-name").html(`${userInfo.firstName} ${userInfo.lastName}${image_url}`);
             $("#course-info").html(`${courseInfo.course.cohort.program.name}`);
             $(".navbar").css('visibility', 'visible');
         });
@@ -138,7 +139,7 @@ $(function () {
         var downloadLink;
         var dataType = 'application/vnd.ms-excel';
         var tableSelect = document.getElementById(tableID);
-        var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20').replace('#', '%23');
+        var tableHTML = tableSelect.outerHTML.replace(/ /g, '%20').replace('#', '%23').replace(',', '%2C');
 
         // Specify file name
         filename = filename ? filename + '.xls' : 'sessions.xls';
