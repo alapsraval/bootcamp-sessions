@@ -13,6 +13,11 @@
 </head>
 
 <body>
+    <div id="loader-view">
+        <section class="loader-container">
+            <span class="loader"></span>
+        </section>
+    </div>
     <div class="container-fluid">
         <div class="row">
             <div class="col-12 p-0">
@@ -20,24 +25,19 @@
                     <a class="navbar-brand" id="course-info"></a>
                     <a class="navbar-brand" id="user-name"></a>
                 </nav>
-
-                <div id="loader-view">
-                    <section class="loader-container">
-                        <span class="loader"></span>
-                    </section>
-                </div>
-
                 <div class="content">
                     <div id="login-form" class="wrapper fadeInDown">
                         <div id="formContent">
-                            <!-- Login Form -->
-                            <form>
-                                <input type="text" id="login" class="fadeIn second" name="login" placeholder="login">
-                                <input type="password" id="password" class="fadeIn third" name="login"
-                                    placeholder="password">
-                                <input type="submit" id="login-btn" class="fadeIn fourth" value="Log In">
-                                <!-- <div id="error-message" class="alert alert-danger" role="alert"></div> -->
-                            </form>
+                            <h2>Bootcamp Sessions</h3>
+                                <!-- Login Form -->
+                                <form>
+                                    <input type="text" id="login" class="fadeIn second" name="login"
+                                        placeholder="login">
+                                    <input type="password" id="password" class="fadeIn third" name="login"
+                                        placeholder="password">
+                                    <input type="submit" id="login-btn" class="fadeIn fourth" value="Log In">
+                                    <!-- <div id="error-message" class="alert alert-danger" role="alert"></div> -->
+                                </form>
                         </div>
                     </div>
 
@@ -46,8 +46,9 @@
                             <thead class="thead-light" id="table-header"></thead>
                             <tbody id="table-body"></tbody>
                         </table>
-                        <button id="download-btn" type="button" class="btn btn-info btn-lg btn-block">Download to Excel</button>
-                    </section>                    
+                        <button id="download-btn" type="button" class="btn btn-info btn-lg btn-block">Download to
+                            Excel</button>
+                    </section>
                 </div>
             </div>
         </div>
@@ -62,7 +63,6 @@
     <script type="text/javascript" src="js/excelexportjs.js"></script>
     <script type="text/javascript" src="js/config.js"></script>
     <script type="text/javascript" src="js/script.js"></script>
-    
 </body>
 
 </html>
