@@ -104,8 +104,8 @@ $(function () {
             contentType: 'application/json; charset=utf-8',
             success: function (response) {
                 $("#error-message").remove();
-                if (response.success) {
-                    sessionToken = response.authenticationInfo.authToken
+                if (response) {
+                    sessionToken = response.authToken
                     getProfile(sessionToken);
                     getSessions(sessionToken);
                     // Hide login form.
