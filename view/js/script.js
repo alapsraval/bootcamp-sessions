@@ -1,11 +1,13 @@
 const headers = ['Session ID', 'Session Name', 'Date', 'Day'];
 var sessionToken = '';
+var enrollmentId = 681246; //344747 for data science bootcamp
 $(function () {
 
     function getProfile(sessionToken) {
         $.get("https://bootcampspot.com/broker/me?authToken=" + sessionToken, function (response) {
             let userInfo = response.userAccount;
             let courseInfo = response.enrollments[0];
+            //enrollmentId = courseInfo.id;
             setUserInfo(userInfo);
             setCourseInfo(courseInfo);
             $(".navbar").css('visibility', 'visible');
@@ -29,7 +31,7 @@ $(function () {
 
     $('#table-header').html('');
     $('#table-body').html('');
-    function getSessions(sessionToken, enrollmentId) {
+    function getSessions(sessionToken) {
         $.ajax({
             url: `https://bootcampspot.com/broker/sessions`,
             type: 'POST',
@@ -118,7 +120,7 @@ $(function () {
                 if (response) {
                     sessionToken = response.authToken
                     getProfile(sessionToken);
-                    getSessions(sessionToken, 681246); //344747 for data science bootcamp
+                    getSessions(sessionToken);
                     // Hide login form.
                     $("#login-form").css('display', 'none');
                 } else {
