@@ -1,16 +1,63 @@
+//variables
 const headers = ['Session ID', 'Session Name', 'Date', 'Day'];
-var sessionToken = '';
-var enrollmentId = 681246; //344747 for data science bootcamp
+let email = '';
+let password = '';
 $(function () {
+
+    function init() {
+        $('#table-header').html('');
+        $('#table-body').html('');
+    }
+
+    function login(event) {
+        event.preventDefault();
+        email = $("#login").val();
+        password = $("#password").val();
+        $.ajax({
+            url: `https://bootcampspot.com/broker/login`,
+            type: 'POST',
+            data: JSON.stringify({
+                email: email,
+                password: password
+            }),
+            contentType: 'application/json; charset=utf-8',
+            success: function (response) {
+                $("#error-message").remove();
+                if (response) {
+                    let sessionToken = response.authToken
+                    getProfile(sessionToken);
+                } else {
+                    let errorMessage = response.errorCode;
+                    switch (errorMessage) {
+                        case 'INVALID_CREDENTIALS':
+                            errorMessage = "Invalid Credentials."
+                            break;
+                        default:
+                            errorMessage = "Something went wrong."
+                    }
+                    $("#formContent").append(`<p id="error-message" class="text-danger">${errorMessage}</p>`);
+                }
+            },
+            complete: function () {
+                // Hide login form.
+                // $("#login-form").css('display', 'none');
+            },
+            error: function (xhr) {
+                alert("An error occured: " + xhr.status + " " + xhr.statusText);
+            }
+        });
+
+    };
 
     function getProfile(sessionToken) {
         $.get("https://bootcampspot.com/broker/me?authToken=" + sessionToken, function (response) {
             let userInfo = response.userAccount;
             let courseInfo = response.enrollments[0];
-            //enrollmentId = courseInfo.id;
+            let enrollmentId = courseInfo.id;
             setUserInfo(userInfo);
             setCourseInfo(courseInfo);
             $(".navbar").css('visibility', 'visible');
+            getSessions(sessionToken, enrollmentId);
         });
     }
 
@@ -20,18 +67,16 @@ $(function () {
 
     // }
 
-    function setCourseInfo(courseInfo) {
-        $("#course-info").html(`${courseInfo.course.cohort.program.name}`);
-    }
-
     function setUserInfo(userInfo) {
         let image_url = userInfo.nexusAvatarUrl ? ` <img alt="${userInfo.firstName} Profile" src="https://bootcampspot.com${userInfo.nexusAvatarUrl}" class="fill rounded " width="30" height="30" ></img>` : '';
         $("#user-name").html(`${userInfo.firstName} ${userInfo.lastName}${image_url}`);
     }
 
-    $('#table-header').html('');
-    $('#table-body').html('');
-    function getSessions(sessionToken) {
+    function setCourseInfo(courseInfo) {
+        $("#course-info").html(`${courseInfo.course.cohort.program.name}`);
+    }
+
+    function getSessions(sessionToken, enrollmentId) {
         $.ajax({
             url: `https://bootcampspot.com/broker/sessions`,
             type: 'POST',
@@ -41,6 +86,8 @@ $(function () {
                 authtoken: sessionToken
             },
             beforeSend: function () {
+                // Hide login form.
+                $("#login-form").css('display', 'none');
                 // Display loader while profile-view is loading.
                 $("#loader-view").css('display', 'block');
             },
@@ -100,53 +147,10 @@ $(function () {
                 $("#loader-view").css('display', 'none');
                 // Display sessions-view.
                 $("#sessions-view").css('display', 'block');
+
             }
         });
     }
-
-    $("#login-btn").click(function (event) {
-        email = $("#login").val();
-        password = $("#password").val();
-        $.ajax({
-            url: `https://bootcampspot.com/broker/login`,
-            type: 'POST',
-            data: JSON.stringify({
-                email: email,
-                password: password
-            }),
-            contentType: 'application/json; charset=utf-8',
-            success: function (response) {
-                $("#error-message").remove();
-                if (response) {
-                    sessionToken = response.authToken
-                    getProfile(sessionToken);
-                    getSessions(sessionToken);
-                    // Hide login form.
-                    $("#login-form").css('display', 'none');
-                } else {
-                    let errorMessage = response.errorCode;
-                    switch (errorMessage) {
-                        case 'INVALID_CREDENTIALS':
-                            errorMessage = "Invalid Credentials."
-                            break;
-                        default:
-                            errorMessage = "Something went wrong."
-                    }
-                    $("#formContent").append(`<p id="error-message" class="text-danger">${errorMessage}</p>`);
-                }
-            },
-            complete: function () {
-                // Hide login form.
-                // $("#login-form").css('display', 'none');
-            },
-            error: function (xhr) {
-                alert("An error occured: " + xhr.status + " " + xhr.statusText);
-            }
-        });
-
-        event.preventDefault();
-
-    });
 
     function exportTableToExcel(tableID = 'sessions-table', filename = '') {
         var downloadLink;
@@ -176,11 +180,9 @@ $(function () {
             downloadLink.click();
         }
     }
-    $("#download-btn").click(function (event) {
-        exportTableToExcel();
-        // $("#sessions-table").excelexportjs({
-        //       containerid:"sessions-table",
-        //       datatype:'table'
-        //     });        
-    });
+
+    //event handlers
+    $("#login-btn").click(login);
+    $("#download-btn").click(exportTableToExcel);
+    init();
 });

@@ -1,2 +1,0 @@
-var email = '';
-var password = '';
