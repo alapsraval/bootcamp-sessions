@@ -1,1 +1,1 @@
-https://alapsraval.github.io/bootcamp-sessions/
+https://alapsraval.github.io/bootcamp-sessions/view
