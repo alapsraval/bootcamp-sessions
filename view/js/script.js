@@ -6,23 +6,34 @@ $(function () {
         $.get("https://bootcampspot.com/broker/me?authToken=" + sessionToken, function (response) {
             let userInfo = response.userAccount;
             let courseInfo = response.enrollments[0];
-            // /broker/studentAvatar?accountId=
-
-            let image_url = userInfo.nexusAvatarUrl ? ` <img alt="${userInfo.firstName} Profile" src="https://bootcampspot.com${userInfo.nexusAvatarUrl}" class="fill rounded " width="30" height="30" ></img>` : '';
-
-            $("#user-name").html(`${userInfo.firstName} ${userInfo.lastName}${image_url}`);
-            $("#course-info").html(`${courseInfo.course.cohort.program.name}`);
+            setUserInfo(userInfo);
+            setCourseInfo(courseInfo);
             $(".navbar").css('visibility', 'visible');
         });
     }
 
+    //Todo: add a function to select a bootcamp and pass enrollmentId dynamically
+
+    // function showCohurts() {
+
+    // }
+
+    function setCourseInfo(courseInfo) {
+        $("#course-info").html(`${courseInfo.course.cohort.program.name}`);
+    }
+
+    function setUserInfo(userInfo) {
+        let image_url = userInfo.nexusAvatarUrl ? ` <img alt="${userInfo.firstName} Profile" src="https://bootcampspot.com${userInfo.nexusAvatarUrl}" class="fill rounded " width="30" height="30" ></img>` : '';
+        $("#user-name").html(`${userInfo.firstName} ${userInfo.lastName}${image_url}`);
+    }
+
     $('#table-header').html('');
     $('#table-body').html('');
-    function getSessions(sessionToken) {
+    function getSessions(sessionToken, enrollmentId) {
         $.ajax({
             url: `https://bootcampspot.com/broker/sessions`,
             type: 'POST',
-            data: JSON.stringify({ enrollmentId: 344747 }),
+            data: JSON.stringify({ enrollmentId: enrollmentId }),
             contentType: 'application/json; charset=utf-8',
             headers: {
                 authtoken: sessionToken
@@ -107,7 +118,7 @@ $(function () {
                 if (response) {
                     sessionToken = response.authToken
                     getProfile(sessionToken);
-                    getSessions(sessionToken);
+                    getSessions(sessionToken, 681246); //344747 for data science bootcamp
                     // Hide login form.
                     $("#login-form").css('display', 'none');
                 } else {
@@ -135,7 +146,7 @@ $(function () {
 
     });
 
-    function exportTableToExcel(tableID='sessions-table', filename = '') {
+    function exportTableToExcel(tableID = 'sessions-table', filename = '') {
         var downloadLink;
         var dataType = 'application/vnd.ms-excel';
         var tableSelect = document.getElementById(tableID);
