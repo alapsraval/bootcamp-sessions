@@ -1,10 +1,11 @@
-var express = require('express');
-var path = require('path');
+const express = require('express');
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-var app = express();
+app.use(express.static("view"));
 
-app.use(express.static(path.join(__dirname, 'view')));
-
-app.listen(process.env.PORT || 8000, '0.0.0.0', function() {});
+app.listen(PORT, () => {
+    console.log(`App running on port ${PORT}!`)
+});
 
 module.exports = app;

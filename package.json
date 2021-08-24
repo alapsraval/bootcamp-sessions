@@ -1,0 +1,22 @@
+{
+  "name": "bootcamp-sessions",
+  "version": "1.0.0",
+  "description": "https://alapsraval.github.io/bootcamp-sessions/view",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alapsraval/bootcamp-sessions.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/alapsraval/bootcamp-sessions/issues"
+  },
+  "homepage": "https://github.com/alapsraval/bootcamp-sessions#readme",
+  "dependencies": {
+    "express": "^4.16.3"  
+  }
+}
