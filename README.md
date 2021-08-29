@@ -1,1 +1,2 @@
-https://alapsraval.github.io/bootcamp-sessions/view
+App deployed on heroku and can be accessed here:
+http://bootcamp-sessions.herokuapp.com/
